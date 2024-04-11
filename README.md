@@ -1,47 +1,35 @@
-# project1
+# Project 1
 
-This is a [Dagster](https://dagster.io/) project scaffolded with [`dagster project scaffold`](https://docs.dagster.io/getting-started/create-new-project).
+## Prerequisites
+
+You will need python3 and pip3 installed for this as well as git installed. I am working on a Linux machine so the environments will differ.
 
 ## Getting started
 
-First, install your Dagster code location as a Python package. By using the --editable flag, pip will install your Python package in ["editable mode"](https://pip.pypa.io/en/latest/topics/local-project-installs/#editable-installs) so that as you develop, local code changes will automatically apply.
+First create a virtual environment in the project repo, this is best practice when working with Python environments.
+
+Navigate to the repository directory in a terminal and execute the following commands to setup the environment.
+
+These commands will change if you are on Windows:
 
 ```bash
-pip install -e ".[dev]"
+python3 -m venv ./venv
 ```
 
-Then, start the Dagster UI web server:
+```bash
+source activate venv/bin/activate
+```
+
+```bash
+pip3 install -e ".[dev]"
+```
+
+Dagster is a Python package I used to save intermediary artifacts with a cache to speed up the process. It creates dependencies between software artifacts and runs them in order. It is not necessary to use the software but does make it easier. To use the software start the Dagster UI web server with the following command:
 
 ```bash
 dagster dev
 ```
 
-Open http://localhost:3000 with your browser to see the project.
+The UI will be served at http://localhost:3000
 
-You can start writing assets in `project1/assets.py`. The assets are automatically loaded into the Dagster code location as you define them.
-
-## Development
-
-### Adding new Python dependencies
-
-You can specify new Python dependencies in `setup.py`.
-
-### Unit testing
-
-Tests are in the `project1_tests` directory and you can run tests using `pytest`:
-
-```bash
-pytest project1_tests
-```
-
-### Schedules and sensors
-
-If you want to enable Dagster [Schedules](https://docs.dagster.io/concepts/partitions-schedules-sensors/schedules) or [Sensors](https://docs.dagster.io/concepts/partitions-schedules-sensors/sensors) for your jobs, the [Dagster Daemon](https://docs.dagster.io/deployment/dagster-daemon) process must be running. This is done automatically when you run `dagster dev`.
-
-Once your Dagster Daemon is running, you can start turning on schedules and sensors for your jobs.
-
-## Deploy on Dagster Cloud
-
-The easiest way to deploy your Dagster project is to use Dagster Cloud.
-
-Check out the [Dagster Cloud Documentation](https://docs.dagster.cloud) to learn more.
+To run all the intermediate artifacts use the Materialize All button and it will re-generate all of the data files. The notebooks will not run even though they show up in the graph. To run a notebook load it up and run the first cell to pull in the data needed for that notebook and then run the cells in order.
