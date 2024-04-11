@@ -13,7 +13,6 @@ setup(
         "jupyter",
         "notebook",
         "dagstermill",
-        "pytest"
     ],
     extras_require={"dev": ["dagster-webserver", "pytest"]},
 )
