@@ -12,7 +12,7 @@ setup(
         "nltk",
         "jupyter",
         "notebook",
-        "dagstermill",
+        "dagstermill"
     ],
     extras_require={"dev": ["dagster-webserver", "pytest"]},
 )

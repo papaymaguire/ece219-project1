@@ -60,17 +60,19 @@ class TextPreprocessor(TransformerMixin, BaseEstimator):
     return part.apply(self._preprocess_text)
 
   def _preprocess_text(self, text):
-    html_clean_text = self._remove_html(text)
-    lowercased_text = self._lowercase_text(html_clean_text)
-    tagged_tokens = self._tag_and_tokenize(lowercased_text)
-    no_punc = self._remove_punctuation(tagged_tokens)
-    no_numbers = self._remove_numbers(no_punc)
-    stem_or_lemm = None
+    text_clean = text
+    text_clean = self._lowercase_text(text_clean)
+    text_clean = self._remove_html(text_clean)
+    text_clean = self._remove_urls(text_clean)
+    tokens = self._tag_and_tokenize(text_clean)
+    #tokens = self._remove_nonalphanum(tokens)
+    tokens = self._remove_punctuation(tokens)
+    tokens = self._remove_numbers(tokens)
     if self.type == "lemm":
-        stem_or_lemm = self._lemmatize(no_numbers)
+      tokens = self._lemmatize(tokens)
     elif self.type == "stem":
-        stem_or_lemm = self._stem(no_numbers)
-    return " ".join(stem_or_lemm)
+      tokens = self._stem(tokens)
+    return " ".join([x for x in tokens if x])
 
   def _remove_html(self, text):
     texter = re.sub(r'^https?:\/\/.*[\r\n]*', '', text, flags=re.MULTILINE)
@@ -92,18 +94,31 @@ class TextPreprocessor(TransformerMixin, BaseEstimator):
       texter = ""
     return texter
   
+  def _remove_urls(self, text):
+    url_pattern = re.compile(r'https?://\S+')
+    return url_pattern.sub('', text)
+  
   def _lowercase_text(self, text):
      return str.lower(text)
   
   def _tag_and_tokenize(self, text):
-    tokens = []
+    """In my testing the tagging gets better results if passed the full text tokenized rather than sentence by sentence"""
+    """ tokens = []
     sentences = nltk.sent_tokenize(text=text)
     for sentence in sentences:
       words = nltk.word_tokenize(sentence)
       tagged_words = pos_tag(words)
       wordnet_tagged = [(word, self._nltk_tag_to_wordnet_tag(pos_tag)) for word, pos_tag in tagged_words]
-      tokens.append(wordnet_tagged)
-    return tokens
+      tokens += wordnet_tagged """
+    words = nltk.word_tokenize(text)
+    tagged_words = pos_tag(words)
+    wordnet_tagged = [(word, self._nltk_tag_to_wordnet_tag(pos_tag)) for word, pos_tag in tagged_words]
+    return wordnet_tagged
+  
+  def _remove_nonalphanum(self, tokens):
+    '''Not used in favor of _remove_punctuation'''
+    punctuation_pattern = r'[^\w\s]'
+    return [(re.sub(punctuation_pattern, '', t[0]), t[1]) for t in tokens]
 
   def _remove_punctuation(self, tokens):
     return [t for t in tokens if t[0] not in string.punctuation]

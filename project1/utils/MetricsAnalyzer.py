@@ -8,9 +8,9 @@ class MetricsAnalyzer ():
         self.pos_label = pos_label
         self.predictions = self.model.predict(self.data)
 
-    def print_all (self):
+    def print_all (self, plot_title=None):
         print("ROC plot: ")
-        self.plot_ROC()
+        self.plot_ROC(plot_title)
         print("Confusion Matrix: ")
         self.print_confusion_matrix()
         print("Accuracy Score: ")
@@ -23,14 +23,14 @@ class MetricsAnalyzer ():
         self.print_f1()
 
 
-    def plot_ROC (self):
+    def plot_ROC (self, title = None):
         prob_scores = self.model.predict_proba(self.data)
         fpr, tpr, _ = roc_curve(self.true_labels, prob_scores[:, 1], pos_label=self.pos_label)
+        if title:
+            plt.title(title)
         plt.plot(fpr, tpr)
         plt.xlabel('False Positive Rate')
         plt.ylabel('True Positive Rate')
-        # show the legend
-        plt.legend()
         # show the plot
         plt.show()
 
