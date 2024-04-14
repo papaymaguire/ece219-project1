@@ -1,11 +1,8 @@
-from setuptools import find_packages, setup
+from setuptools import setup
 
 setup(
     name="project1",
-    packages=find_packages(exclude=["project1_tests"]),
     install_requires=[
-        "dagster",
-        "dagster-cloud",
         "pandas",
         "scipy",
         "matplotlib",
@@ -13,7 +10,7 @@ setup(
         "nltk",
         "jupyter",
         "notebook",
-        "dagstermill"
-    ],
-    extras_require={"dev": ["dagster-webserver", "pytest"]},
+        "dagstermill",
+        "pytest"
+    ]
 )
