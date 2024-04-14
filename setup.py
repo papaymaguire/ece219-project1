@@ -7,6 +7,7 @@ setup(
         "dagster",
         "dagster-cloud",
         "pandas",
+        "scipy",
         "matplotlib",
         "scikit-learn",
         "nltk",

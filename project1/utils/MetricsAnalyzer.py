@@ -8,9 +8,10 @@ class MetricsAnalyzer ():
         self.pos_label = pos_label
         self.predictions = self.model.predict(self.data)
 
-    def print_all (self, plot_title=None):
-        print("ROC plot: ")
-        self.plot_ROC(plot_title)
+    def print_all (self, roc=True, plot_title=None):
+        if roc:
+            print("ROC plot: ")
+            self.plot_ROC(plot_title)
         print("Confusion Matrix: ")
         self.print_confusion_matrix()
         print("Accuracy Score: ")
@@ -36,6 +37,9 @@ class MetricsAnalyzer ():
 
     def print_confusion_matrix (self):
         print(confusion_matrix(self.true_labels, self.predictions))
+
+    def get_accuracy (self):
+        return accuracy_score(self.true_labels, self.predictions)
 
     def print_accuracy (self):
         print(accuracy_score(self.true_labels, self.predictions))

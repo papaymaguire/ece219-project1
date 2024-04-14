@@ -237,3 +237,61 @@ question8_notebook = define_dagstermill_asset(
     },
     description="""Notebook used to answer question 8"""
 )
+
+
+question9_notebook = define_dagstermill_asset(
+    name="question9",
+    group_name="project1",
+    notebook_path=file_relative_path(__file__, "./notebooks/question9.ipynb"),
+    ins={
+        "dim_reduced_train_features": AssetIn("dim_reduced_train_features"),
+        "train": AssetIn("train"),
+        "dim_reduced_test_features": AssetIn("dim_reduced_test_features"),
+        "test": AssetIn("test")
+    },
+    description="""Notebook used to answer question 9"""
+)
+
+
+question10_notebook = define_dagstermill_asset(
+    name="question10",
+    group_name="project1",
+    notebook_path=file_relative_path(__file__, "./notebooks/question10.ipynb"),
+    description="""Notebook used to answer question 10"""
+)
+
+
+question11_notebook = define_dagstermill_asset(
+    name="question11",
+    group_name="project1",
+    notebook_path=file_relative_path(__file__, "./notebooks/question11.ipynb"),
+    ins={
+        "train": AssetIn("train"),
+        "test": AssetIn("test")
+    },
+    description="""Notebook used to answer question 11"""
+)
+
+
+question12_notebook = define_dagstermill_asset(
+    name="question12",
+    group_name="project1",
+    notebook_path=file_relative_path(__file__, "./notebooks/question12.ipynb"),
+    ins={
+        "train": AssetIn("train"),
+        "test": AssetIn("test")
+    },
+    description="""Notebook used to answer question 12"""
+)
+
+
+question13_notebook = define_dagstermill_asset(
+    name="question13",
+    group_name="project1",
+    notebook_path=file_relative_path(__file__, "./notebooks/question13.ipynb"),
+    ins={
+        "train": AssetIn("train"),
+        "test": AssetIn("test")
+    },
+    description="""Notebook used to answer question 13"""
+)
