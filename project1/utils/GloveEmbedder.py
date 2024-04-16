@@ -4,25 +4,17 @@ import numpy as np
 import multiprocessing as mp
 import nltk
 import joblib
-from project1.utils.GoogleDriveDataIO import GoogleDriveDataIO
 
 class GloveEmbedder(TransformerMixin, BaseEstimator):
-    def __init__ (self, embedding_dict, embedding_dim, location="memory", drive_io:GoogleDriveDataIO=None, n_jobs=1):
+    def __init__ (self, embedding_dict, embedding_dim, location="memory", n_jobs=1):
         self.embedding_dict = None
         try:
             if location == "memory":
                 self.embedding_dict = embedding_dict
-            else:
-                # can either be drive or local
-                # indicates embedding dict needs to be loaded from a file
-                if location == "drive":
-                    if not drive_io:
-                        raise ValueError("drive_io must be supplied if location is drive")
-                    self.embedding_dict = drive_io.load(embedding_dict)
-                elif location == "local":
+            elif location == "local":
                     self.embedding_dict = joblib.load(embedding_dict)
-                else:
-                    raise ValueError("Invalid location argument, must be memory, drive, or local")
+            else:
+                raise ValueError("Invalid location argument, must be memory, or local")
         except:
             raise ValueError("could not load embedding dict")
         self.embedding_dim = embedding_dim
