@@ -4,7 +4,7 @@ import numpy as np
 import multiprocessing as mp
 import nltk
 import joblib
-from GoogleDriveDataIO import GoogleDriveDataIO
+from project1.utils.GoogleDriveDataIO import GoogleDriveDataIO
 
 class GloveEmbedder(TransformerMixin, BaseEstimator):
     def __init__ (self, embedding_dict, embedding_dim, location="memory", drive_io:GoogleDriveDataIO=None, n_jobs=1):
