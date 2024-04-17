@@ -1,5 +1,12 @@
 import matplotlib.pyplot as plt
-from sklearn.metrics import roc_curve, confusion_matrix, accuracy_score, recall_score, precision_score, f1_score
+import seaborn as sns; sns.set() #for advanced plot styling - added by Kristi
+
+# Original sklearn import
+# from sklearn.metrics import roc_curve, confusion_matrix, accuracy_score, recall_score, precision_score, f1_score
+
+# Kristi's updated sklearn import
+from sklearn.metrics import roc_curve, auc, confusion_matrix, accuracy_score, recall_score, precision_score, f1_score, classification_report
+
 class MetricsAnalyzer ():
     def __init__(self, model, data, true_labels, pos_label=None) -> None:
         self.model = model
@@ -23,7 +30,8 @@ class MetricsAnalyzer ():
         print("F1 Score: ")
         self.print_f1()
 
-
+    '''
+    # Original plot_ROC
     def plot_ROC (self, title = None):
         prob_scores = self.model.predict_proba(self.data)
         fpr, tpr, _ = roc_curve(self.true_labels, prob_scores[:, 1], pos_label=self.pos_label)
@@ -34,9 +42,40 @@ class MetricsAnalyzer ():
         plt.ylabel('True Positive Rate')
         # show the plot
         plt.show()
+    '''
+    
+    # Kristi's modified plot_ROC
+    def plot_ROC (self, title = None):
+        prob_scores = self.model.predict_proba(self.data)
+        fpr, tpr, _ = roc_curve(self.true_labels, prob_scores[:, 1], pos_label=self.pos_label)
+        roc_auc = auc(fpr, tpr)
 
+        if title:
+            plt.title(title)
+
+        # Plot the ROC curve
+        #plt.plot(fpr, tpr)
+        plt.plot(fpr, tpr, label='ROC curve (area = %0.2f)' % roc_auc)
+        plt.plot([0, 1], [0, 1], 'k--', label='No Skill')
+        plt.xlim([0.0, 1.0])
+        plt.ylim([0.0, 1.05])
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.legend()
+        # show the plot
+        plt.show()
+    
     def print_confusion_matrix (self):
-        print(confusion_matrix(self.true_labels, self.predictions))
+        # Original print_confusion_matrix had only this line
+        #print(confusion_matrix(self.true_labels, self.predictions))
+
+        # Kristi's Replacement Code
+        mat = confusion_matrix(self.true_labels, self.predictions)
+        sns.heatmap(mat.T, square=True, annot=True, fmt='d', cbar=False,
+                    xticklabels=['climate','sports'],
+                    yticklabels=['climate', 'sports'])
+        plt.xlabel('True Label')
+        plt.ylabel('Predicted Label')
 
     def get_accuracy (self):
         return accuracy_score(self.true_labels, self.predictions)
