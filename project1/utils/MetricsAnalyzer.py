@@ -17,10 +17,12 @@ class MetricsAnalyzer ():
 
     def print_all (self, roc=True, plot_title=None):
         if roc:
-            print("ROC plot: ")
+            # print("ROC plot: ")
             self.plot_ROC(plot_title)
-        print("Confusion Matrix: ")
+        #print("Confusion Matrix: ")
         self.print_confusion_matrix()
+        print(classification_report(self.true_labels, self.predictions))
+        '''
         print("Accuracy Score: ")
         self.print_accuracy()
         print("Recall Score: ")
@@ -29,7 +31,7 @@ class MetricsAnalyzer ():
         self.print_precision()
         print("F1 Score: ")
         self.print_f1()
-
+        '''
     '''
     # Original plot_ROC
     def plot_ROC (self, title = None):
