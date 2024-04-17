@@ -16,11 +16,13 @@ class MetricsAnalyzer ():
         self.predictions = self.model.predict(self.data)
 
     def print_all (self, roc=True, plot_title=None):
+        print("Classification Measures: ", plot_title)
         if roc:
-            # print("ROC plot: ")
+            print("\n ROC plot: ")
             self.plot_ROC(plot_title)
-        #print("Confusion Matrix: ")
+        print("\n Confusion Matrix: ")
         self.print_confusion_matrix()
+        print("\n Classification Statistics")
         print(classification_report(self.true_labels, self.predictions))
         '''
         print("Accuracy Score: ")
@@ -75,6 +77,7 @@ class MetricsAnalyzer ():
         sns.heatmap(mat.T, square=True, annot=True, fmt='d', cbar=False,
                     xticklabels=['climate','sports'],
                     yticklabels=['climate', 'sports'])
+        plt.title("Confusion Matrix")
         plt.xlabel('True Label')
         plt.ylabel('Predicted Label')
 
