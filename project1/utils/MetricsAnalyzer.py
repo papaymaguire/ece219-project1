@@ -16,7 +16,8 @@ class MetricsAnalyzer ():
             self.plot_ROC(plot_title)
             
         self.print_confusion_matrix(plot_title)
-        print("\n Classification Statistics: " + plot_title)
+        print("\n Classification Report")
+        if plot_title: print(plot_title)
         print(classification_report(self.true_labels, self.predictions))
     
     def plot_ROC (self, title = None):
