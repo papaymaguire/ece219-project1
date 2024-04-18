@@ -1,10 +1,5 @@
 import matplotlib.pyplot as plt
 import seaborn as sns; sns.set() #for advanced plot styling - added by Kristi
-
-# Original sklearn import
-# from sklearn.metrics import roc_curve, confusion_matrix, accuracy_score, recall_score, precision_score, f1_score
-
-# Kristi's updated sklearn import
 from sklearn.metrics import roc_curve, auc, confusion_matrix, accuracy_score, recall_score, precision_score, f1_score, classification_report
 
 class MetricsAnalyzer ():
@@ -44,10 +39,6 @@ class MetricsAnalyzer ():
         plt.show()
     
     def print_confusion_matrix (self):
-        # Original print_confusion_matrix had only this line
-        #print(confusion_matrix(self.true_labels, self.predictions))
-
-        # Kristi's Replacement Code
         mat = confusion_matrix(self.true_labels, self.predictions)
         sns.heatmap(mat.T, square=True, annot=True, fmt='d', cbar=False,
                     xticklabels=['climate','sports'],
