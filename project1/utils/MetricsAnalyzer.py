@@ -18,37 +18,12 @@ class MetricsAnalyzer ():
     def print_all (self, roc=True, plot_title=None):
         print("Classification Measures: ", plot_title)
         if roc:
-            print("\n ROC plot: ")
             self.plot_ROC(plot_title)
-        print("\n Confusion Matrix: ")
+            
         self.print_confusion_matrix()
         print("\n Classification Statistics")
         print(classification_report(self.true_labels, self.predictions))
-        '''
-        print("Accuracy Score: ")
-        self.print_accuracy()
-        print("Recall Score: ")
-        self.print_recall()
-        print("Precision Score: ")
-        self.print_precision()
-        print("F1 Score: ")
-        self.print_f1()
-        '''
-    '''
-    # Original plot_ROC
-    def plot_ROC (self, title = None):
-        prob_scores = self.model.predict_proba(self.data)
-        fpr, tpr, _ = roc_curve(self.true_labels, prob_scores[:, 1], pos_label=self.pos_label)
-        if title:
-            plt.title(title)
-        plt.plot(fpr, tpr)
-        plt.xlabel('False Positive Rate')
-        plt.ylabel('True Positive Rate')
-        # show the plot
-        plt.show()
-    '''
     
-    # Kristi's modified plot_ROC
     def plot_ROC (self, title = None):
         prob_scores = self.model.predict_proba(self.data)
         fpr, tpr, _ = roc_curve(self.true_labels, prob_scores[:, 1], pos_label=self.pos_label)
