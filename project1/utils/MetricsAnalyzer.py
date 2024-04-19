@@ -19,7 +19,7 @@ class MetricsAnalyzer ():
         print("Classification Report")
         if plot_title: print(plot_title)
         print()
-        print(classification_report(self.true_labels, self.predictions))
+        print(classification_report(self.true_labels, self.predictions, digits=4))
     
     def plot_ROC (self, title = None):
         prob_scores = self.model.predict_proba(self.data)
