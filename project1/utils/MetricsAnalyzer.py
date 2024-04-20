@@ -12,6 +12,8 @@ class MetricsAnalyzer ():
 
     def print_all (self, roc=True, plot_title=None):
         print("Classification Measures: ", plot_title)
+        print()
+        print("Accuracy: ", plot_title)
         print(accuracy_score(self.true_labels, self.predictions))
         if roc:
             self.plot_ROC(plot_title)
